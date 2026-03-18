@@ -5,6 +5,14 @@ annotate service.Books with @(
         Data : [
             {
                 $Type : 'UI.DataField',
+                Value : title,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : genre,
+            },
+            {
+                $Type : 'UI.DataField',
                 Label : '{i18n>PublishedAt}',
                 Value : publishedAt,
             },
@@ -17,6 +25,11 @@ annotate service.Books with @(
                 $Type : 'UI.DataField',
                 Label : '{i18n>Price}',
                 Value : price,
+            },
+            {
+                $Type : 'UI.DataField',
+                Value : stock,
+                Label : '{i18n>Stock}',
             },
             {
                 $Type : 'UI.DataField',
@@ -90,10 +103,10 @@ annotate service.Books with @(
         },
     ],
     UI.SelectionFields : [
-        genre,
-        title,
         price,
         status_code,
+        genre,
+        title,
     ],
     UI.HeaderInfo : {
         TypeName : '{i18n>Book}',
@@ -129,49 +142,10 @@ annotate service.Books with @(
             },
         ],
     },
-    UI.PresentationVariant #vh_Books_title : {
-        $Type : 'UI.PresentationVariantType',
-        SortOrder : [
-            {
-                $Type : 'Common.SortOrderType',
-                Property : title,
-                Descending : false,
-            },
-        ],
-    },
     UI.HeaderFacets : [
         
     ],
-    UI.FieldGroup #Header : {
-        $Type : 'UI.FieldGroupType',
-        Data : [
-            {
-                $Type : 'UI.DataField',
-                Value : status_code,
-                Criticality : status.criticality,
-                CriticalityRepresentation : #WithIcon,
-            },
-        ],
-    },
-);
-
-annotate service.Books with {
-    author @Common.ValueList : {
-        $Type : 'Common.ValueListType',
-        CollectionPath : 'Authors',
-        Parameters : [
-            {
-                $Type : 'Common.ValueListParameterInOut',
-                LocalDataProperty : author_ID,
-                ValueListProperty : 'ID',
-            },
-            {
-                $Type : 'Common.ValueListParameterDisplayOnly',
-                ValueListProperty : 'name',
-            },
-        ],
-    }
-};
+    );
 
 annotate service.Books with {
     genre @(
@@ -194,21 +168,7 @@ annotate service.Books with {
 annotate service.Books with {
     title @(
         Common.Label : '{i18n>Title}',
-        Common.Text : genre,
-        Common.ValueList : {
-            $Type : 'Common.ValueListType',
-            CollectionPath : 'Books',
-            Parameters : [
-                {
-                    $Type : 'Common.ValueListParameterInOut',
-                    LocalDataProperty : title,
-                    ValueListProperty : 'title',
-                },
-            ],
-            PresentationVariantQualifier : 'vh_Books_title',
-        },
-        Common.ValueListWithFixedValues : false,
-    )
+        )
 };
 
 annotate service.Books with {
