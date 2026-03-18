@@ -1,0 +1,4 @@
+code,criticality,displayText
+O,1,Out of Stock
+L,2,Low Stock
+A,3,Available

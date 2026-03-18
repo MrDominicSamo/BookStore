@@ -18,6 +18,12 @@ annotate service.Books with @(
                 Label : '{i18n>Price}',
                 Value : price,
             },
+            {
+                $Type : 'UI.DataField',
+                Value : status_code,
+                Criticality : status.criticality,
+                CriticalityRepresentation : #WithIcon,
+            },
         ],
     },
     UI.Facets : [
@@ -41,6 +47,13 @@ annotate service.Books with @(
         },
     ],
     UI.LineItem : [
+        {
+            $Type : 'UI.DataField',
+            Value : status_code,
+            Label : '{i18n>Status}',
+            Criticality : status.criticality,
+            CriticalityRepresentation : #WithIcon,
+        },
         {
             $Type : 'UI.DataField',
             Label : '{i18n>BookName}',
@@ -70,11 +83,17 @@ annotate service.Books with @(
             $Type : 'UI.DataField',
             Value : createdAt,
         },
+        {
+            $Type : 'UI.DataField',
+            Value : stock,
+            Label : '{i18n>Stock}',
+        },
     ],
     UI.SelectionFields : [
         genre,
         title,
         price,
+        status_code,
     ],
     UI.HeaderInfo : {
         TypeName : '{i18n>Book}',
@@ -110,6 +129,30 @@ annotate service.Books with @(
             },
         ],
     },
+    UI.PresentationVariant #vh_Books_title : {
+        $Type : 'UI.PresentationVariantType',
+        SortOrder : [
+            {
+                $Type : 'Common.SortOrderType',
+                Property : title,
+                Descending : false,
+            },
+        ],
+    },
+    UI.HeaderFacets : [
+        
+    ],
+    UI.FieldGroup #Header : {
+        $Type : 'UI.FieldGroupType',
+        Data : [
+            {
+                $Type : 'UI.DataField',
+                Value : status_code,
+                Criticality : status.criticality,
+                CriticalityRepresentation : #WithIcon,
+            },
+        ],
+    },
 );
 
 annotate service.Books with {
@@ -131,11 +174,41 @@ annotate service.Books with {
 };
 
 annotate service.Books with {
-    genre @Common.Label : '{i18n>Genre}'
+    genre @(
+        Common.Label : '{i18n>Genre}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Books',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : genre,
+                    ValueListProperty : 'genre',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : false,
+        )
 };
 
 annotate service.Books with {
-    title @Common.Label : '{i18n>Title}'
+    title @(
+        Common.Label : '{i18n>Title}',
+        Common.Text : genre,
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'Books',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : title,
+                    ValueListProperty : 'title',
+                },
+            ],
+            PresentationVariantQualifier : 'vh_Books_title',
+        },
+        Common.ValueListWithFixedValues : false,
+    )
 };
 
 annotate service.Books with {
@@ -161,4 +234,32 @@ annotate service.Chapters with @(
         },
     ]
 );
+
+annotate service.Books with {
+    status @(
+        Common.Text : status.displayText,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+        Common.Label : '{i18n>Status}',
+        Common.ValueList : {
+            $Type : 'Common.ValueListType',
+            CollectionPath : 'BookStatus',
+            Parameters : [
+                {
+                    $Type : 'Common.ValueListParameterInOut',
+                    LocalDataProperty : status_code,
+                    ValueListProperty : 'code',
+                },
+            ],
+        },
+        Common.ValueListWithFixedValues : true,
+    )
+};
+
+annotate service.BookStatus with {
+    code @(
+        Common.Label : 'status/code',
+        Common.Text : displayText,
+        Common.Text.@UI.TextArrangement : #TextOnly,
+    )
+};
 
