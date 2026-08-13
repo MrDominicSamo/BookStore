@@ -5,6 +5,7 @@ using {
     managed,
     sap.common.Currencies
 } from '@sap/cds/common';
+using {Attachments} from '@cap-js/attachments';
 
 entity Books : cuid, managed {
     title       : String(255);
@@ -49,14 +50,15 @@ entity BookStatus {
 }
 
 entity Authors : cuid, managed {
-    name     : String;
-    fileName : String;
-    fileType : String      @Core.IsMediaType;
-    content  : LargeBinary @Core.MediaType                  : fileType
-                           @Core.AcceptableMediaTypes       : ['application/pdf']
-                           @Core.ContentDisposition.Filename: fileName;
-    books    : Association to many Books
-                   on books.author = $self;
+    name        : String;
+    fileName    : String;
+    fileType    : String      @Core.IsMediaType;
+    content     : LargeBinary @Core.MediaType                  : fileType
+                              @Core.AcceptableMediaTypes       : ['application/pdf']
+                              @Core.ContentDisposition.Filename: fileName;
+    attachments : Composition of many Attachments;
+    books       : Association to many Books
+                      on books.author = $self;
 }
 
 entity Chapters : cuid, managed {
