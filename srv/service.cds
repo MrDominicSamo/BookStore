@@ -6,7 +6,7 @@ service BookStoreService {
             @(Common.SideEffects: {TargetProperties: ['stock']})
             action addStock();
             action changePublishDate(newDate: Date);
-            @(Common.SideEffects: {TargetEntities: ['in']})
+            @(Common.SideEffects: {TargetProperties: ['status_code']})
             action changeStatus( @(Common: {
                                      ValueListWithFixedValues: true,
                                      Label                   : 'New Status',
@@ -22,6 +22,9 @@ service BookStoreService {
                                  })
                                  newStatus: String);
         };
+
+    @(Common.SideEffects: {TargetEntities: ['/BookStoreService.EntityContainer/Books']})
+    action addDiscount();
 
     entity Authors    as projection on db.Authors;
     entity Chapters   as projection on db.Chapters;

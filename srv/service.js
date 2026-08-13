@@ -4,6 +4,15 @@ module.exports = class BookStoreService extends cds.ApplicationService {
   init() {
     const { Books, Genre } = cds.entities;
 
+    this.on("addDiscount", async () => {
+      await UPDATE(Books).set({
+        price: {
+          func: "ROUND",
+          args: [{ xpr: [{ ref: ["price"] }, "*", { val: 0.9 }] }, { val: 2 }],
+        },
+      });
+    });
+
     this.on("addStock", "Books", async (req) => {
       const bookId = req.params[0].ID;
 

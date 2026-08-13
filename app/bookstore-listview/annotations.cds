@@ -117,6 +117,11 @@ annotate service.Books with @(
             Action : 'BookStoreService.changePublishDate',
             Label : 'Change Publish Date',
         },
+        {
+            $Type : 'UI.DataFieldForAction',
+            Action : 'BookStoreService.EntityContainer/addDiscount',
+            Label : '10% Discount',
+        },
     ],
     UI.SelectionFields : [
         price,
