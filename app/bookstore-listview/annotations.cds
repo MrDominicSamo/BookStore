@@ -270,9 +270,3 @@ annotate service.Currencies with {
     code @Common.Text : descr
 };
 
-annotate service.GenresVH with {
-    code @(
-        Common.Text : description,
-        Common.Text.@UI.TextArrangement : #TextOnly,
-    )
-};
