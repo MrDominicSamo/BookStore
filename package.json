@@ -9,6 +9,23 @@
         "credentials": {
           "url": "db.sqlite"
         }
+      },
+      "auth": {
+        "kind": "mocked",
+        "users": {
+          "alice": {
+            "password": "T3stingMockUser!",
+            "roles": [
+              "admin"
+            ]
+          },
+          "bob": {
+            "password": "T3stingMockUser?",
+            "roles": [
+              "user"
+            ]
+          }
+        }
       }
     }
   },

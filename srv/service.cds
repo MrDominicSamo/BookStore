@@ -1,6 +1,20 @@
 using {db.bookstore as db} from '../db/schema';
 
 service BookStoreService {
+    //Grant roles to the service
+    @(restrict: [
+        {
+            grant: [
+                'READ',
+                'WRITE'
+            ],
+            to   : 'admin'
+        },
+        {
+            grant: ['READ'],
+            to   : 'user'
+        }
+    ])
     entity Books      as projection on db.Books
         actions {
             @(Common.SideEffects: {TargetProperties: ['stock']})
@@ -24,6 +38,7 @@ service BookStoreService {
         };
 
     @(Common.SideEffects: {TargetEntities: ['/BookStoreService.EntityContainer/Books']})
+    @(requires: 'admin')
     action addDiscount();
 
     entity Authors    as projection on db.Authors;
@@ -34,4 +49,8 @@ service BookStoreService {
 }
 
 annotate BookStoreService.Books with @odata.draft.enabled;
-annotate BookStoreService.Authors with @odata.draft.enabled;
+
+annotate BookStoreService.Authors with @(
+    odata.draft.enabled,
+    requires: 'admin'
+);

@@ -1,0 +1,38 @@
+GET http://localhost:4004/odata/v4/book-store/$metadata
+
+###
+GET http://localhost:4004/odata/v4/book-store/Books
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+
+###
+GET http://localhost:4004/odata/v4/book-store/Books?$count=true
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+
+###
+GET http://localhost:4004/odata/v4/book-store/Authors
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+
+###
+GET http://localhost:4004/odata/v4/book-store/Authors?$count=true
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+
+###
+POST http://localhost:4004/odata/v4/book-store/Books
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+Content-Type: application/json
+
+{
+    "title": "My CAP Journey"
+}
+
+###
+PATCH  http://localhost:4004/odata/v4/book-store/Books(ID=7c4a9f58-facf-4a21-a8bd-62b9b3c36222, IsActiveEntity='true')
+Authorization: Basic YWxpY2U6VDNzdGluZ01vY2tVc2VyIQ==
+
+Content-Type: application/json
+
+{
+    "author_ID": "6acbe106-1d92-422d-9e54-4f8c2167bf10",
+    "HasActiveEntity": true,
+    "HasDraftEntity": true
+}

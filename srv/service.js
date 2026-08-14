@@ -2,7 +2,7 @@ const cds = require("@sap/cds");
 
 module.exports = class BookStoreService extends cds.ApplicationService {
   init() {
-    const { Books, Genre, Authors } = cds.entities;
+    const { Books, Genre } = cds.entities;
 
     this.on("addDiscount", async () => {
       await UPDATE(Books).set({
@@ -44,14 +44,14 @@ module.exports = class BookStoreService extends cds.ApplicationService {
       return next();
     });
 
-    this.after("READ", "Books", async (books, req) => {
-      for (const book of books) {
-        if (book.genre_code === Genre.Art) {
-          book.price = book.price * 0.8;
-        }
-      }
-      console.log("After READ Books");
-    });
+    // this.after("READ", "Books", async (books, req) => {
+    //   for (const book of books) {
+    //     if (book.genre_code === "Art") {
+    //       book.price = (book.price * 0.8).toFixed(2); // Apply a 20% discount for Art genre
+    //     }
+    //   }
+    //   console.log("After READ Books");
+    // });
 
     this.after("READ", "Authors", async (authors) => {
       const ids = authors.map((author) => author.ID);
